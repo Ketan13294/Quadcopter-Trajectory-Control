@@ -1,6 +1,6 @@
 %% user input vars
-m = 10; n=10; p=10; % world dimensions, where mxnxp ---> l x w x h 
-radius = 1; %obstacle size
+m = 40; n=40; p=20; % world dimensions, where mxnxp ---> l x w x h 
+radius = 2; %obstacle size
 num_obstacles = 5; %number of obstacles
 
 %% create obstacle map
@@ -10,19 +10,16 @@ num_obstacles = 5; %number of obstacles
 i=0;
 X = zeros(m,n,p);
 
-x = [5 3.3 3.3 6.5 6.5];
-y = [5 3.3 6.5 3.3 6.5];
-z = [3 6.5 6.5 6.5 6.5];
+x = [5 23 23 16 36];
+y = [5 13 26 13 16];
+z = [3 6 6 12 6];
 
 % the center of sphere
 while i<num_obstacles
-%     xc=randi([radius,m-radius],1); %generate x coordinate, so that sphere doesn't touch edges
-%     yc=randi([radius,n-radius],1);
-%     zc =randi([radius,p-radius],1);
     xc = x(i+1);
     yc = y(i+1);
     zc = z(i+1);
-    logicalSphere = (px-xc).^2 + (py-yc).^2 + (pz-zc).^2 <= radius*radius;
+    logicalSphere = ((px-xc).^2 + (py-yc).^2 + (pz-zc).^2 <= radius*radius);
     if ~(ismember(1, X(logicalSphere))) 
         X(logicalSphere) = 1; % set as obstacle
         i=i+1;
@@ -44,7 +41,7 @@ camlight; lighting phong
 hold off
 
 %% create occupancy map
-omap = occupancyMap3D(5); %map resolution 10 cells/meter
+omap = occupancyMap3D(2); %map resolution 10 cells/meter
 
 % find coords where obstacles are 
 [x,y,z]= ind2sub(size(X),find(X == 1));
