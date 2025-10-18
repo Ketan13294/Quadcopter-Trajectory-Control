@@ -14,18 +14,18 @@ addpath('utils');
 real_time = true;
 
 % max time
-max_time = 30;
+max_time = 500;
 
 % parameters for simulation
 params = sys_params;
 
 %% **************************** FIGURES *****************************
 disp('Initializing figures...');
-h_fig = figure;
+h_fig = gcf;
 h_3d = gca;
 axis equal
 grid on
-view(3);
+% view(3);
 xlabel('x [m]'); ylabel('y [m]'); zlabel('z [m]')
 quadcolors = lines(1);
 
@@ -60,7 +60,6 @@ disp('Simulation Running....');
 % pause(15);
 % Main loop
 for iter = 1:max_iter
-
     timeint = time:tstep:time+cstep;
 
     tic;

@@ -31,7 +31,7 @@ persistent coef_x coef_y coef_z waypoints0 traj_time d0
 if nargin > 2
     % setup trajectory segment times
     d = waypoints(:,2:end) - waypoints(:,1:end-1);
-    d0 = 3.2 * sqrt(d(1,:).^2 + d(2,:).^2 + d(3,:).^2);
+    d0 = 4.0 * sqrt(d(1,:).^2 + d(2,:).^2 + d(3,:).^2);
     traj_time = [0, cumsum(d0)];
     waypoints0 = waypoints;
     

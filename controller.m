@@ -23,25 +23,35 @@ function [F, M] = controller(t, state, des_state, params)
 %akp = [13.0, 13.6, 10];
 %akd = [0.009, 0.009, 0.070];
 
-%kp = [75, 75, 75];
-%kd = [7, 6.5, 6.5];
-%akp = [13.0, 13.6, 10];
-%akd = [0.009, 0.009, 0.070];
+% kp = [75, 75, 75];
+% kd = [7, 6.5, 6.5];
+% akp = [13.0, 13.6, 10];
+% akd = [0.009, 0.009, 0.070];
 
-%kp = [75, 75, 75];
-%kd = [6.5, 6.5, 6.5];
-%akp = [14, 14, 14];
-%akd = [0.009, 0.009, 0.009];
-% 
+% kp = [75, 75, 75];
+% kd = [6.5, 6.5, 6.5];
+% akp = [14, 14, 14];
+% akd = [0.009, 0.009, 0.009];
+
 % kp = [80, 80, 80];
 % kd = [8, 8, 8];
 % akp = [100, 100, 100];
 % akd = [4, 4, 4];
 
-kp = [100, 100, 100];
-kd = [10, 10, 10];
-akp = [100, 100, 100];
-akd = [10, 10, 10];
+% kp = [180, 180, 180];
+% kd = [100, 100, 100];
+% akp = [250, 250, 100];
+% akd = [100, 100, 10];
+
+% kp = [10, 10, 1];
+% kd = [0.01, 0.01, 0.01];
+% akp = [1, 1, 10];
+% akd = [0.01, 0.01, 0.01];
+
+kp = [24, 24, 750];
+kd = [9.2, 9.2, 450];
+akp = [80, 80, 80];
+akd = [8.6, 8.6, 4.8];
 
 % Unit tangent to trajectory 
 tcap = des_state.vel/norm(des_state.vel);
@@ -73,11 +83,6 @@ r1ddot = des_state.acc(1) + kd(1)*err_v(1) + kp(1)*err_p(1);
 r2ddot = des_state.acc(2) + kd(2)*err_v(2) + kp(2)*err_p(2);
 r3ddot = des_state.acc(3) + kd(3)*err_v(3) + kp(3)*err_p(3);
 
-% r1ddot = des_state.acc(1) + kd(1)*(des_state.vel(1)-state.vel(1)) + kp(1)*(des_state.pos(1)-state.pos(1));
-% r2ddot = des_state.acc(2) + kd(2)*(des_state.vel(2)-state.vel(2)) + kp(2)*(des_state.pos(2)-state.pos(2));
-% r3ddot = des_state.acc(3) + kd(3)*(des_state.vel(3)-state.vel(3)) + kp(3)*(des_state.pos(3)-state.pos(3));
-
-
 phi_dest = (1/params.gravity)*(r1ddot * sin(des_state.yaw) - r2ddot * cos(des_state.yaw));
 theta_dest = (1/params.gravity)*(r1ddot * cos(des_state.yaw) + r2ddot * sin(des_state.yaw));
 psi_dest = des_state.yaw;
@@ -97,9 +102,9 @@ end
 
 % Moment
 M = zeros(3,1);
-M(1) = akp(1)*(phi_dest - state.rot(1)) + akd(1)*(p_dest - state.omega(1));
+M(1) = akp(1)*(phi_dest - state.rot(1))   + akd(1)*(p_dest - state.omega(1));
 M(2) = akp(2)*(theta_dest - state.rot(2)) + akd(2)*(q_dest - state.omega(2));
-M(3) = akp(3)*(psi_dest - state.rot(3)) + akd(3)*(r_dest - state.omega(3));
+M(3) = akp(3)*(psi_dest - state.rot(3))   + akd(3)*(r_dest - state.omega(3));
 
 % =================== Your code ends here ===================
 
