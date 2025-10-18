@@ -48,7 +48,7 @@ function [F, M] = controller(t, state, des_state, params)
 % akp = [1, 1, 10];
 % akd = [0.01, 0.01, 0.01];
 
-kp = [24, 24, 750];
+kp = [20, 20, 750];
 kd = [9.2, 9.2, 450];
 akp = [80, 80, 80];
 akd = [8.6, 8.6, 4.8];

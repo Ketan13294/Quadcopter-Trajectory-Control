@@ -18,7 +18,7 @@ max_time = 500;
 
 % parameters for simulation
 params = sys_params;
-
+filename = './figures/demo.gif'; % output file name
 %% **************************** FIGURES *****************************
 disp('Initializing figures...');
 h_fig = gcf;
@@ -103,6 +103,14 @@ for iter = 1:max_iter
     % Check termination criteria
     if terminate_check(x, time, stop_pos, pos_tol, vel_tol, max_time)
         break
+    end
+    frame = getframe(gcf);
+    im = frame2im(frame);
+    [imind, cm] = rgb2ind(im, 256);
+    if iter == 1
+        imwrite(imind, cm, filename, 'gif', 'Loopcount', inf, 'DelayTime', 0.1);
+    else
+        imwrite(imind, cm, filename, 'gif', 'WriteMode', 'append', 'DelayTime', 0.1);
     end
 end
 
